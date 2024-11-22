@@ -1,0 +1,815 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 1;
+}
+
+.logo {
+    max-height: 180px;
+    width: auto;
+    margin-top: 50px; /* Adjust this value to move the logo down */
+}
+
+
+.welcome-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.background-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+    will-change: opacity;
+    z-index: -1;
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 47%; /* 2% more to the left */
+    transform: translateX(-50%); /* Adjust to truly center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 150px;
+    animation: bounce 1.5s infinite;
+}
+
+
+
+
+
+.scroll-down-gif {
+    width: 120px; /* Increased size */
+    height: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)); /* Enhance visibility */
+}
+
+.scroll-down-text {
+    font-size: 20px; /* Larger text */
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 0px 5px #000; /* Add text shadow for visibility */
+}
+
+/* Adding a bounce animation for better visual appeal */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+
+/* Bistro Nouveau Story section - larger and more impactful */
+.bistro-nouveau-story {
+    height: 60vh; /* Adjust height to accommodate the longer text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url('images/story.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+    border-top: 4px solid rgba(255, 255, 255, 0.5); /* Add a light border for visual separation */
+}
+
+/* Enhancing the story content area */
+.story-content {
+    max-width: 900px; /* Widen content area slightly for medium-length text */
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for better text contrast */
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add subtle shadow for depth */
+}
+
+/* Improving text size for readability */
+.story-content h2 {
+    font-size: 38px; /* Slightly larger title */
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.story-content p {
+    font-size: 20px; /* Increased text size for readability */
+    line-height: 1.6; /* Improved line spacing */
+    margin-bottom: 15px;
+}
+
+
+/* Flex container for Menu, Reservation, and Social Media sections - fills bottom half of viewport */
+.info-sections {
+    height: 50vh;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.info-sections > div {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    border: 2px solid #000;
+    border-radius: 5px;
+}
+
+.info-sections h2 {
+    font-size: 24px;
+    color: white;
+    margin-top: 0;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Add background for visibility */
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.menu-section {
+    background-image: url('images/Menu.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Make the original reservation section clickable */
+.reservation-section {
+    background-image: url('images/reservation.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white; 
+    position: relative;
+    padding: 50px 0;
+    text-align: center;
+    cursor: pointer; 
+    transition: opacity 0.3s ease;
+}
+
+/* Style for the form container */
+.reservation-form-container {
+    background-color: rgba(0, 0, 0, 0.9); /* Dark background for the form */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 40px auto; /* Center align the form */
+    color: white;
+    display: none; /* Hide by default */
+}
+
+/* Form Styles */
+.reservation-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.reservation-form .form-group {
+    margin-bottom: 15px;
+}
+
+.reservation-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.reservation-form input,
+.reservation-form select,
+.reservation-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.reservation-form button {
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #f8b400;
+    border: none;
+    border-radius: 5px;
+    color: #111;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.reservation-form button:hover {
+    background-color: #e69a00;
+}
+
+
+
+
+/* Style for the social media section */
+.social-media-section {
+    background-image: url('images/socialmedia.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    position: relative;
+    padding: 50px 0;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+/* Style for the social media box with custom background image */
+.social-media-box {
+    background-image: url('images/box.png'); /* Set the background image */
+    background-size: cover; /* Ensure the background covers the entire box */
+    background-position: center; /* Center the background */
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 40px auto;
+    color: white;
+    display: none; /* Hidden by default */
+    text-align: center;
+    position: relative;
+}
+
+/* Rest of the styles for the content, links, and hover effects stay the same */
+.social-media-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Adjust spacing between the social media buttons (links) */
+.social-media-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Increased gap for more space between buttons */
+    align-items: center; /* Center the buttons horizontally */
+}
+
+/* Individual social media link button styles */
+.social-link {
+    color: white;
+    font-size: 1.3em;
+    text-decoration: none;
+    padding: 15px 30px; /* Increase padding for larger clickable area */
+    border-radius: 25px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: 100%; /* Make each button take up full width */
+    max-width: 350px; /* Limit the width of each button */
+}
+
+/* Instagram style */
+.instagram {
+    background-color: #e4405f; /* Instagram pink */
+}
+
+.instagram:hover {
+    background-color: #d93c56;
+}
+
+/* Facebook style */
+.facebook {
+    background-color: #3b5998; /* Facebook dark blue */
+}
+
+.facebook:hover {
+    background-color: #2d4373;
+}
+
+/* Twitter style */
+.twitter {
+    background-color: #1da1f2; /* Twitter light blue */
+}
+
+.twitter:hover {
+    background-color: #0c95c1;
+}
+
+.social-media-section h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+
+/* General Styles for the Contact Section */
+.contact-us-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.contact-section {
+    width: 80%;  /* Adjust width as needed */
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-image: url('images/cus.png');
+    background-size: cover;
+    background-position: center;
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .contact-section {
+        width: 90%;
+        height: 200px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Desktop View */
+@media (min-width: 769px) {
+    .contact-section {
+        width: 45%;  /* Adjust width for larger screens */
+        height: 300px;
+    }
+}
+
+/* Ensures the link covers the whole area */
+.contact-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+
+
+/* General styling for HTML and body */
+html, body {
+    height: auto; /* Allow height to grow dynamically */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0;
+    padding: 0;
+}
+
+/* Story section adjustments for mobile */
+@media (max-width: 768px) {
+    #bistro-nouveau-story {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-sizing: border-box;
+        transition: height 0.3s ease; /* Smooth expand/collapse */
+    }
+
+    .story-content {
+        max-width: 90%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .story-text.preview {
+        max-height: 100px; /* Limit height for preview */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis;
+        transition: max-height 0.3s ease; /* Smooth expand/collapse */
+    }
+
+    .story-text.expanded {
+        max-height: none; /* Remove height limit for expansion */
+    }
+
+    .toggle-story {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    .toggle-story:hover {
+        background-color: #0056b3;
+    }
+}
+
+/* Logo adjustments */
+@media (max-width: 768px) {
+    header .logo {
+        max-width: 80px; /* Adjust size of the logo */
+        margin-top: 80px; /* Adjust this value to move the logo down */
+        display: block;
+    }
+
+    /* Scroll-down button adjustments */
+    .scroll-down-indicator {
+        position: absolute;
+        bottom: 5%; /* Adjust the position slightly above the bottom */
+        left: 43%; /* Center horizontally */
+        transform: translateX(-50%); /* Ensure proper centering */
+        width: 70px; /* Resize the button */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .scroll-down-gif {
+        width: 100%; /* Ensure it scales with the container */
+        height: auto;
+    }
+
+    .scroll-down-text {
+        font-size: 12px; /* Adjust font size for readability */
+        text-align: center;
+    }
+}
+
+/* Info sections */
+@media (max-width: 768px) {
+    .info-section {
+        display: block; /* Stacks each section vertically */
+        width: 100%;
+        margin-bottom: 20px; /* Add spacing between sections */
+    }
+
+    .info-section-content {
+        overflow: hidden; /* Prevent content overflow */
+        transition: max-height 0.3s ease; /* Smooth animation */
+        max-height: 0; /* Initially collapsed */
+    }
+
+    .info-section-content.expanded {
+        max-height: 500px; /* Expandable height (adjust as needed) */
+    }
+
+    .info-section-header {
+        cursor: pointer; /* Indicate it's clickable */
+        background-color: #f0f0f0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .info-section-header:hover {
+        background-color: #e0e0e0;
+    }
+}
+
+/* General button styles */
+button {
+    min-height: 50px; /* Make buttons tall enough to tap */
+    font-size: 1em; /* Ensure readable text */
+}
+
+/* Image responsiveness */
+img {
+    max-width: 100%; /* Ensure images don’t overflow */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Contact form adjustments for very small screens */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5em; /* Even smaller font size for phones */
+    }
+
+    .contact-form {
+        padding: 10px; /* Further reduce padding */
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        font-size: 0.9em; /* Adjust font size for readability */
+    }
+
+    .locations {
+        gap: 15px; /* Reduce spacing between location blocks */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .info-sections {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Optional: Center align items */
+        gap: 20px; /* Add spacing between sections */
+    }
+
+    .info-sections > div {
+        width: 90%; /* Adjust width to fit within the screen */
+        height: auto; /* Allow the height to adjust naturally */
+    }
+}
+
+
+/* Additional sections below are hidden initially until user scrolls further */
+.location-section, #contact {
+    padding: 100px 20px;
+    text-align: center;
+    border: 2px solid #000;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling globally */
+}
+
+
+/* General styling and animation adjustments */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px); /* Start from a slightly lower position */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0); /* Reset position to original */
+}
+
+/* Hover effect for sections */
+.info-sections > div, .location-section, #contact, .bistro-nouveau-story {
+    transition: transform 0.3s ease-in-out;
+}
+
+.info-sections > div:hover, .location-section:hover, #contact:hover, .bistro-nouveau-story:hover {
+    transform: scale(1.05); /* Slightly larger scale on hover */
+}
+
+.selectable-section:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+
+
+/* Black Bar Styling */
+.top-bar {
+    background-color: #000;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center; /* Center the buttons in the bar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.button-container {
+    display: flex;
+    gap: 20px; /* Adds space between buttons */
+    margin-left: -3%; /* Move buttons slightly to the left */
+}
+
+.button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px; /* Increase font size a bit more */
+    font-weight: bold;
+    cursor: pointer;
+    padding: 14px 22px; /* Increase padding for a slightly bigger button */
+}
+
+/* Shortcut Button Styling */
+.button.shortcut {
+    background-image: url('images/shortcuts.png'); /* Set the png as the background */
+    background-size: cover; /* Ensure the image fits */
+    background-position: center;
+    width: 45px; /* Increase the width of the shortcut button */
+    height: 45px; /* Increase the height of the shortcut button */
+}
+
+/* Add margin-top to prevent content from being hidden behind the bar */
+body {
+    margin-top: 50px; /* Adjust depending on the height of your bar */
+}
+
+
+/* For Modal Background */
+.modal {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(5px);  /* Optional: adds a blur effect behind the modal */
+}
+
+
+.modal-content {
+    background-color: white;  /* White background behind the content */
+    padding: 20px;            /* Adds space inside the modal */
+    border-radius: 8px;       /* Rounded corners for a cleaner look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Light shadow for depth */
+    width: 100%;              /* Full width of its container */
+    max-width: 400px;         /* Optional: limits width of the modal */
+    margin: auto;             /* Centers the modal */
+    box-sizing: border-box;   /* Ensures padding doesn't add extra width */
+    text-align: center;       /* Ensures the text and buttons inside align */
+}
+
+.modal-content input {
+    padding: 12px 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;  /* Make inputs take the full width */
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.modal-content .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.modal-content .button-group button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.modal-content .btn-login {
+    background-color: #28a745; /* Green */
+}
+
+.modal-content .btn-register {
+    background-color: #007bff; /* Blue */
+}
+
+/* To hide the login form when switching to the registration page */
+.modal-content .login-form {
+    display: none;
+}
+
+.modal-content .register-form {
+    display: block;
+}
+
+/* Fade-out and Fade-in transition for modals */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+
+/* Hide the test box initially */
+#testBox {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Slide-in animation */
+.slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -150%);
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+.shortcut-menu {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 40px;
+    z-index: 100;
+    width: 800px;
+    text-align: center;
+}
+
+.shortcut-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: list-item;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+}
+
+.shortcut-menu li {
+    font-size: 22px;
+    padding: 25px;
+    cursor: pointer;
+    background-color: #444;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.shortcut-menu li:hover {
+    background-color: #555;
+}
+
+.shortcut-menu li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+button {
+    width: 100%; /* Makes the button take up the full width of its container */
+    max-width: 300px; /* Limits the button's width */
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 16px; /* Adjust button text size */
+    border: 1px solid #ccc; /* Optional border styling */
+    background-color: #4CAF50; /* Example background color */
+    color: white;
+    border-radius: 5px; /* Rounded corners */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker shade for hover effect */
+}
+
+.modal-content {
+    background-color: white;  /* White background behind the content */
+    padding: 20px;            /* Adds space inside the modal */
+    border-radius: 8px;       /* Rounded corners for a cleaner look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Light shadow for depth */
+    width: 100%;              /* Full width of its container */
+    max-width: 400px;         /* Optional: limits width of the modal */
+    margin: auto;             /* Centers the modal */
+    box-sizing: border-box;   /* Ensures padding doesn't add extra width */
+}
+
+

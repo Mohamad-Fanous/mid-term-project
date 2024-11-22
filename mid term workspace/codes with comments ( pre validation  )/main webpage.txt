@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Bistro Nouveau</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Modal Background */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: transparent; /* No white box */
+            padding: 0;
+            width: 80%; /* Make the modal bigger */
+            max-width: 900px; /* Set a maximum size */
+            text-align: center;
+        }
+
+        /* Close Button */
+        .close {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }@media (max-width: 480px) {
+    
+}
+
+
+        /* Menu Image Styling */
+        .menu-image {
+            width: 100%; /* Adjust to take full width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Ensure the content section is clickable */
+        .menu-overlay {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="button-container">
+            <button class="button" id="loginButton">Login</button>
+            <button class="button shortcut" onclick="toggleShortcutMenu()">
+            </button>
+        </div>
+    </div>
+    
+    
+    <div id="shortcut-menu" class="shortcut-menu">
+        <ul>
+            <li><a href="#home-section">Home</a></li>
+            <li><a href="#menu-section">Menu</a></li>
+            <li><a href="#contact-section">Contact Us</a></li>
+            <li><a href="#social-media-section">Social Media</a></li>
+            <li><a href="#reservation-section">Reservation</a></li>
+        </ul>
+    </div>
+    
+    
+    <!-- Main Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username" required />
+                <input type="password" id="loginPassword" placeholder="Password" required />
+                <div class="button-group">
+                    <button class="btn-login" type="submit">Login</button>
+                    <button class="btn-register" type="button" onclick="openModal('registerModal')">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <input type="text" id="username" placeholder="Username" required />
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="password" id="password" placeholder="Password" required />
+                <input type="tel" id="phoneNumber" placeholder="Phone Number" required />
+                <div class="button-group">
+                    <button class="btn-login" type="submit">Confirm</button>
+                    <button class="btn-register" type="button" onclick="closeModal('registerModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <header>
+        <img src="images/logo.png" alt="Bistro Nouveau Logo" class="logo" onclick="scrollToTop()">
+    </header>
+
+    <main>
+        <section class="welcome-screen">
+            <div class="background-fade" id="background-fade"></div>
+            <a href="#bistro-nouveau-story" class="scroll-down-indicator">
+                <img src="images/scrolldown.gif" alt="Scroll Down" class="scroll-down-gif">
+                <p class="scroll-down-text">Scroll Down</p>
+            </a>
+        </section>
+
+        <section id="bistro-nouveau-story" class="bistro-nouveau-story">
+            <div class="story-content">
+                <h2>Bistro Nouveau Story</h2>
+                <div class="story-text preview">
+                    <p>Opened in 2024, Bistro Nouveau brings a fresh take on classic cuisine with a modern twist. Located in the heart of the city, we blend traditional flavors with innovative techniques...</p>
+                    <p>At Bistro Nouveau, we are passionate about using the finest locally-sourced ingredients to create dishes that reflect the best of each season...</p>
+                    <p>Step inside our stylish, cozy ambiance, where modern design meets timeless charm. Whether you're joining us for a casual lunch, a romantic dinner, or a special celebration, our attentive staff and inviting atmosphere ensure an unforgettable dining experience. Bistro Nouveau is where the past meets the future in every bite, offering a fresh perspective on beloved classics.</p>                </div>
+                <button class="toggle-story" onclick="toggleStory()">Read More (mobile)</button>
+            </div>
+        </section>
+        
+        
+        <section class="info-sections hidden">
+            <div class="menu-section" onclick="showMenu()">
+                <div class="menu-overlay">
+                    <span style="font-size: 1.5em;">Our Menu</span>
+                </div>
+            </div>
+             <!-- Existing Reservation Section -->
+<div class="reservation-section" onclick="showReservationForm()">
+    <h2>Make a Reservation</h2>
+</div>
+
+<!-- Hidden Reservation Form (uses the existing section) -->
+<div class="reservation-form-container" id="reservationFormContainer" style="display: none;">
+    <form class="reservation-form" action="#" method="post">
+        <!-- Input field for client's name -->
+<!-- Input field for client's name -->
+<div class="form-group">
+    <label for="client-name">Name:</label>
+    <input type="text" id="client-name" name="client-name" placeholder="Your Name" required>
+</div>
+
+
+        <div class="form-group">
+            <label for="number-of-people">Number of People:</label>
+            <select id="number-of-people" name="number-of-people" required>
+                <option value="1">1 Person</option>
+                <option value="2">2 People</option>
+                <option value="3">3 People</option>
+                <option value="4">4 People</option>
+                <option value="5">5 People</option>
+                <option value="6">6 People</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="reservation-date">Date:</label>
+            <input type="date" id="reservation-date" name="reservation-date" required>
+        </div>
+        <div class="form-group">
+            <label for="reservation-time">Time:</label>
+            <input type="time" id="reservation-time" name="reservation-time" required>
+        </div>
+        <div class="form-group">
+            <label for="comments">Comments (optional):</label>
+            <textarea id="comments" name="comments" placeholder="Any special requests..."></textarea>
+        </div>
+        <button type="submit">Reserve Table</button>
+        <button type="button" onclick="hideReservationForm()">Cancel</button>
+    </form>
+</div>
+
+<!-- Existing Social Media Section -->
+<div class="social-media-section" onclick="showSocialMediaBox(event)">
+    
+</div>
+
+<!-- Hidden Social Media Box (uses the existing section) -->
+<div class="social-media-box" id="socialMediaBox" style="display: none;">
+    <div class="social-media-content">
+       
+        <div class="social-media-links">
+            <a href="https://facebook.com" target="_blank" class="social-link facebook">Facebook</a>
+            <a href="https://twitter.com" target="_blank" class="social-link twitter">Twitter</a>
+            <a href="https://instagram.com" target="_blank" class="social-link instagram">Instagram</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Main content above remains the same -->
+</section>
+
+<!-- Contact Us Section at the bottom -->
+<section class="contact-us-section">
+    <div class="contact-section selectable-section">
+        <a href="contact-us.html" class="contact-link">
+            <!-- Preserve the clickable section without additional text -->
+        </a>
+    </div>
+</section>
+
+        
+        </section>          
+    <script src="script.js"></script>
+
+    <script>
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Function to open modal
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+
+        // Function to close modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Show Menu Modal on section click
+        function showMenu() {
+            const menuModal = document.getElementById('menu-modal');
+            menuModal.style.display = 'flex';
+        }
+
+        // Close Menu Modal on clicking the close button
+        document.querySelector('#menu-modal .close').addEventListener('click', () => {
+            const menuModal = document.getElementById('menu-modal');
+            menuModal.style.display = 'none';
+        });
+
+        // Close Menu Modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const menuModal = document.getElementById('menu-modal');
+            if (e.target === menuModal) {
+                menuModal.style.display = 'none';
+            }
+        });
+
+        // Sign Out Function
+        function signOut() {
+            // Clear the login state and show the login button again
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('signOutMenu').style.display = 'none'; // Hide sign-out menu
+        }
+    </script>
+
+<!-- Menu Modal (hidden by default) -->
+<div id="menu-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('menu-modal')">&times;</span>
+        <img src="images/ourmenu.png" alt="Our Menu" class="menu-image" style="width: 80%; height: auto;">
+    </div>
+</div>
+
+
+</body>
+</html>

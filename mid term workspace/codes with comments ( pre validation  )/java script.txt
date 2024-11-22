@@ -1,0 +1,348 @@
+// Updated paths for fading background images
+const images = [
+    "images/main.jpg",
+    "images/main2.jpg",
+    "images/main3.png",
+    "images/main4.png",
+    "images/main5.jpg"
+];
+
+let currentImageIndex = 0;
+const fadeElement = document.getElementById('background-fade');
+
+// Preload images to avoid white flashes during transition
+images.forEach((image) => {
+    const img = new Image();
+    img.src = image;
+});
+
+// Function to set the initial background image immediately
+function initializeBackground() {
+    fadeElement.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+    fadeElement.style.opacity = 1; // Ensure it's fully visible
+}
+
+// Function to handle image fading
+function changeBackgroundImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    
+    setTimeout(() => {
+        fadeElement.style.opacity = 0; // Start fading out
+        setTimeout(() => {
+            fadeElement.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+            fadeElement.style.opacity = 1; // Fade the new image in
+        }, 500); // Match the reduced CSS transition duration
+    }, 3000); // Display the current image for 3 seconds
+}
+
+// Initialize the background slideshow and set the first image instantly
+initializeBackground();
+setInterval(changeBackgroundImage, 3000); // Call the function every 3 seconds
+
+// Function to check if an element is in the viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Function to add visible class when in viewport
+function handleScrollAnimation() {
+    const elements = document.querySelectorAll('.hidden');
+    elements.forEach((element) => {
+        if (isInViewport(element)) {
+            element.classList.add('visible');
+        }
+    });
+}
+
+// Listen to scroll event
+window.addEventListener('scroll', handleScrollAnimation);
+
+// Initialize elements when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    handleScrollAnimation();
+});
+
+// JavaScript for scroll-triggered animations
+document.addEventListener('DOMContentLoaded', () => {
+    const hiddenSections = document.querySelectorAll('.hidden');
+
+    const observerOptions = {
+        threshold: 0.2 // Trigger when 20% of the section is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                // Remove 'visible' class when section goes out of view to re-trigger animation
+                entry.target.classList.remove('visible');
+            }
+        });
+    }, observerOptions);
+
+    hiddenSections.forEach(section => observer.observe(section));
+});
+
+// Modal handling logic
+const loginButton = document.querySelector('.button');
+const modal = document.getElementById('loginModal');
+const closeButton = modal.querySelector('.close');
+let currentUser = null; // Track the logged-in user
+const signOutDropdown = document.createElement('div'); // Dropdown for sign-out
+signOutDropdown.style.display = 'none'; // Initially hidden
+signOutDropdown.innerHTML = '<button id="signOutBtn">Sign Out</button>';
+loginButton.after(signOutDropdown); // Append dropdown after login button
+
+// Open modal on "Login" button click
+loginButton.addEventListener('click', () => {
+    if (currentUser) {
+        // Toggle the sign-out dropdown if a user is logged in
+        signOutDropdown.style.display = signOutDropdown.style.display === 'none' ? 'block' : 'none';
+    } else {
+        // Show login modal if no user is logged in
+        modal.style.display = 'flex'; // Show modal
+    }
+});
+
+// Close modal on clicking the "X" button
+closeButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Close modal when clicking outside of the modal content
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Open modal by ID
+function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+}
+
+// Close modal by ID
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+// Register Form Submission
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Get user input
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const phoneNumber = document.getElementById("phoneNumber").value;
+
+    // Retrieve all users from localStorage to check for existing ones
+    let userCount = localStorage.length; // Get the total number of items in localStorage
+    let newUserKey = "user" + (userCount + 1); // Create a new user key (user1, user2, etc.)
+
+    // Save the new user directly under this key
+    const newUser = {
+        username: username,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber
+    };
+
+    // Save the new user in localStorage
+    localStorage.setItem(newUserKey, JSON.stringify(newUser));
+
+    // Close the registration modal
+    closeModal('registerModal');
+});
+
+// Login Form Submission
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Get user input
+    const loginUsername = document.getElementById("loginUsername").value;
+    const loginPassword = document.getElementById("loginPassword").value;
+
+    // Retrieve all users from localStorage
+    let userFound = false; // Flag to track if a valid user was found
+
+    // Iterate over all keys in localStorage to find a matching user
+    for (let i = 0; i < localStorage.length; i++) {
+        let userKey = localStorage.key(i);
+        let user = JSON.parse(localStorage.getItem(userKey));
+
+        if (user.username === loginUsername && user.password === loginPassword) {
+            userFound = true;
+            currentUser = user;  // Store the logged-in user
+            closeModal('loginModal');
+            updateLoginButton();  // Update the login button to show the username
+            break;  // Exit the loop once we find the user
+        }
+    }
+});
+
+// Function to update the login button with the logged-in username
+function updateLoginButton() {
+    loginButton.textContent = currentUser.username;  // Change login button to show the logged-in username
+}
+
+// Sign out function to reset the session
+document.getElementById('signOutBtn').addEventListener('click', signOut);
+
+function signOut() {
+    currentUser = null;  // Clear the logged-in user
+    loginButton.textContent = "Login";  // Change button text back to "Login"
+    signOutDropdown.style.display = 'none'; // Hide sign-out dropdown
+}
+
+// Switch between Login and Register sections
+const loginSection = document.querySelector('.login-section');
+const registerSection = document.querySelector('.register-section');
+
+// Switch to Register Section and hide Login Section
+document.getElementById('to-register').addEventListener('click', function() {
+    loginSection.style.display = 'none';  // Hide login section
+    registerSection.style.display = 'block';  // Show register section
+});
+
+// Switch to Login Section and hide Register Section
+document.getElementById('to-login').addEventListener('click', function() {
+    registerSection.style.display = 'none';  // Hide register section
+    loginSection.style.display = 'block';  // Show login section
+});
+// Toggle function to show/hide shortcut menu
+function toggleShortcutMenu() {
+    const shortcutMenu = document.getElementById("shortcut-menu");
+    shortcutMenu.style.display = shortcutMenu.style.display === "block" ? "none" : "block";
+}
+
+
+function showReservationForm() {
+    // Show the form when the background image is clicked
+    document.getElementById('reservationFormContainer').style.display = 'block'; // Make the form visible
+    document.querySelector('.reservation-section').style.display = 'none'; // Hide the clickable section
+}
+
+function hideReservationForm() {
+    // Hide the form and show the background again if 'Cancel' is clicked
+    document.getElementById('reservationFormContainer').style.display = 'none'; // Hide the form
+    document.querySelector('.reservation-section').style.display = 'block'; // Show the clickable section
+}
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        if (sectionId === 'reservation-section') {
+            showReservationForm(); // Ensure this function opens the reservation form
+        }
+    }
+}
+
+
+
+
+function showSocialMediaBox(event) {
+    event.stopPropagation();  // Prevent the event from bubbling up to the document
+
+    // Hide the social media section and show the box
+    document.querySelector('.social-media-section').style.display = 'none';
+    document.getElementById("socialMediaBox").style.display = 'block';
+
+    // Add event listener to close the box when clicking outside of it
+    document.addEventListener('click', closeSocialMediaBox);
+}
+
+function closeSocialMediaBox(event) {
+    var box = document.getElementById("socialMediaBox");
+    if (!box.contains(event.target)) {
+        // Hide the box and revert to the original background
+        box.style.display = 'none';
+        document.querySelector('.social-media-section').style.display = 'block';
+
+        // Remove the event listener to prevent unnecessary clicks
+        document.removeEventListener('click', closeSocialMediaBox);
+    }
+}
+
+
+
+// Adjust Story Section to Expand and Ensure Paragraph Visibility
+document.querySelector('.story-content').addEventListener('click', function () {
+    this.classList.toggle('expanded'); // Add/remove 'expanded' class
+});
+
+// Reservation Popup Replaces Section
+function showReservationForm() {
+    const reservationSection = document.querySelector('.reservation-section');
+    const reservationForm = document.getElementById('reservationFormContainer');
+
+    reservationSection.style.display = 'none'; // Hide the original section
+    reservationForm.style.display = 'flex'; // Show the popup in place
+}
+
+function hideReservationForm() {
+    const reservationSection = document.querySelector('.reservation-section');
+    const reservationForm = document.getElementById('reservationFormContainer');
+
+    reservationForm.style.display = 'none'; // Hide the popup
+    reservationSection.style.display = 'flex'; // Show the original section
+}
+
+
+
+
+// Ensure the logo or other fixed elements respond correctly
+window.addEventListener('resize', () => {
+    // You can log or apply dynamic changes if necessary
+    console.log('Screen resized: ', window.innerWidth);
+});
+
+
+
+function toggleStory() {
+    const storyText = document.querySelector(".story-text");
+    const toggleButton = document.querySelector(".toggle-story");
+    const storySection = document.getElementById("bistro-nouveau-story");
+
+    if (storyText.classList.contains("preview")) {
+        storyText.classList.remove("preview");
+        storyText.classList.add("expanded");
+        toggleButton.textContent = "Read Less";
+
+        // Expand the page height
+        storySection.style.height = "auto"; // Remove height restriction
+        document.body.style.height = "auto"; // Allow body to expand
+    } else {
+        storyText.classList.remove("expanded");
+        storyText.classList.add("preview");
+        toggleButton.textContent = "Read More";
+
+        // Revert the page height
+        storySection.style.height = ""; // Reset to default
+    }
+}
+
+
+
+// Function to toggle the expansion of sections (Reservation, Follow Us)
+function toggleSectionExpansion(section) {
+    const selectedSection = document.querySelector(`.${section}`);
+    selectedSection.classList.toggle('expanded');
+}
+
+// Attach the function to the appropriate sections
+document.querySelector('.reservation-section').addEventListener('click', () => {
+    toggleSectionExpansion('reservation-section');
+});
+
+document.querySelector('.social-media-section').addEventListener('click', () => {
+    toggleSectionExpansion('social-media-section');
+});
